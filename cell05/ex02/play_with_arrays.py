@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
 arr1 = [2,8,9,48,8,22,-12,2]
-arr2 = [(arr1[i] + 2) if arr1[i] > 5 else arr1[i] for i in range(len(arr1))]
-print(f"Original array: {arr1}")
-print(f"New Array: {arr2}")
+arr2 = [(i+ 2)  for i in arr1 if i > 5]
+print(arr1)
+print(arr2)
