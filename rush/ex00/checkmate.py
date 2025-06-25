@@ -1,4 +1,3 @@
-
 def checkmate(board):
     try:
         rows = board.strip().split("\n")
@@ -16,6 +15,10 @@ def checkmate(board):
         num_column = len(board[0])
 
         if num_rows > 8 or num_rows < 1 or num_column > 8 or num_column < 1:
+            print("Fail")
+            return
+
+        if num_rows != num_column:
             print("Fail")
             return
         
@@ -39,9 +42,7 @@ def checkmate(board):
         if king_count != 1:
             print("Fail")
             return
-        
-        print("Success")
-        
+                
         if check(board, king_row , king_col, num_rows):
             print("Check")
             return
@@ -105,15 +106,11 @@ def pawn_attack(board, pawn_row, pawn_col, king_row, king_col):
     if pawn_row - 1 == king_row and (pawn_col - 1 == king_col or pawn_col + 1 == king_col):
         return True
     return False
-            
-boardd = """
-....
-.K..
-....
-....
+
+boardd = """\
+...
+.K.
+.R.\
 """
+
 checkmate(boardd)
-
-
-
-
