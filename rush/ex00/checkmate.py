@@ -11,7 +11,7 @@ def checkmate(board):
             return
         board = []
         for r in rows:
-            board.append(r)
+            board.append(list(r))
         if len(board) == 0:
             print("Fail")
             return
@@ -27,28 +27,26 @@ def checkmate(board):
 
         for i in range(num_rows):
             for j in range(num_column):
-                if board[i][j] != "K" or board[i][j] != "P" or board[i][j] != "Q" or board[i][j] != "R" or board[i][j] != "B" or board[i][j] != ".":
+                if board[i][j] not in "KPQRB.":
                     print("Fail")
                     return
                 elif board[i][j] == "K":
                     king_count += 1
                     king_row , king_col = i , j
         
-        if king_count > 1:
+        if king_count != 1:
             print("Fail")
             return
         
-        if king_checkmate(board, king_row , king_col):
-            print("Success")
-            return
-        else:
-            print("Fail")
-            return
+        print("Success")
+        
+    #     if king_checkmate(board, king_row , king_col):
+    #         print("Success")
+    #         return
+    #     else:
+    #         print("Fail")
+    #         return
     except:
 
         print("Fail")
         return
-    
-def king_checkmate(board, row, col):
-
-
