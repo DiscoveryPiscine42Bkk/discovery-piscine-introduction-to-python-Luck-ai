@@ -42,13 +42,13 @@ def checkmate(board):
         if king_count != 1:
             print("Fail")
             return
-                
-        if check(board, king_row , king_col, num_rows):
-            print("Check")
-            return
+  
+        if king_checkmate(board, king_row, king_col, num_rows, num_column):
+            print("Checkmate")
         else:
-            print("Not check")
+            print("Not checkmate")
             return
+        
     except:
         print("Fail")
         return
@@ -107,10 +107,42 @@ def pawn_attack(board, pawn_row, pawn_col, king_row, king_col):
         return True
     return False
 
+def king_checkmate(board, king_row, king_col, rows, cols):
+    if not check(board, king_row, king_col, rows): 
+        return False
+
+    king_moves = [
+        (-1, -1), (-1, 0), (-1, 1),
+        (0, -1),           (0, 1),
+        (1, -1),  (1, 0),  (1, 1)
+    ]
+
+    for r, c in king_moves:
+        n_row = king_row + r
+        n_col = king_col + c
+
+        if (0 <= n_row < rows) and (0 <= n_col < cols):
+            prev_piece = board[n_row][n_col]
+
+            if prev_piece == '.':
+                board[king_row][king_col] = '.'
+                board[n_row][n_col] = 'K'
+
+                checked = check(board, n_row, n_col, rows) 
+
+                board[king_row][king_col] = 'K'
+                board[n_row][n_col] = prev_piece
+
+                if not checked:
+                    return False
+    
+    return True
+
 boardd = """\
-...
-.K.
-.R.\
+K...
+..P.
+R...
+...B\
 """
 
 checkmate(boardd)
