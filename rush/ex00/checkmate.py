@@ -40,11 +40,11 @@ def checkmate(board):
         
         print("Success")
         
-        if king_checkmate(board, king_row , king_col):
-            print("Success")
+        if check(board, king_row , king_col):
+            print("Check")
             return
         else:
-            print("Fail")
+            print("Not check")
             return
     except:
 
@@ -53,7 +53,7 @@ def checkmate(board):
     
 
 
-def is_in_check(board, king_row, king_col):
+def check(board, king_row, king_col):
 
     for i in range(len(board)):
         for j in range(len(board)):
@@ -87,6 +87,17 @@ def rook_attack(board, rook_row, rook_col, king_row, king_col):
     return False
 
 def bishop_attack(board, bishop_row, bishop_col, king_row, king_col):
+    if abs(bishop_row - king_row) == abs(bishop_col - king_col):
+        row_step = 1 if king_row > bishop_row else -1
+        col_step = 1 if king_col > bishop_col else -1
+        r, c = bishop_row + row_step, bishop_col + col_step
+        while r != king_row and c != king_col:
+            if board[r][c] != ".":
+                return False
+            r += row_step
+            c += col_step
+        return True
+    return False
 
 
 def queen_attack(board, queen_row, queen_col, king_row, king_col):
