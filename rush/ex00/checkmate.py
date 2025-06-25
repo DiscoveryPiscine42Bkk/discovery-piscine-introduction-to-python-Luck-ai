@@ -1,7 +1,3 @@
-#check square
-#check only one king
-#check only allowed peices
-#check board exists
 
 def checkmate(board):
     try:
@@ -18,9 +14,15 @@ def checkmate(board):
         
         num_rows = len(board)
         num_column = len(board[0])
-        if num_rows != num_column:
+
+        if num_rows > 8 or num_rows < 1 or num_column > 8 or num_column < 1:
             print("Fail")
             return
+        
+        for row in board:
+            if len(row) != num_column:
+                print("Fail")
+                return
 
         king_count = 0
         king_row , king_col = 0 , 0
@@ -40,23 +42,20 @@ def checkmate(board):
         
         print("Success")
         
-        if check(board, king_row , king_col):
+        if check(board, king_row , king_col, num_rows):
             print("Check")
             return
         else:
             print("Not check")
             return
     except:
-
         print("Fail")
         return
     
+def check(board, king_row, king_col, row):
 
-
-def check(board, king_row, king_col):
-
-    for i in range(len(board)):
-        for j in range(len(board)):
+    for i in range(row):
+        for j in range(row):
             if board[i][j] == "R":  
                 if rook_attack(board, i, j, king_row, king_col):
                     return True
@@ -75,13 +74,13 @@ def check(board, king_row, king_col):
 
 def rook_attack(board, rook_row, rook_col, king_row, king_col):
     if rook_row == king_row:
-        for c in range(min(rook_col, king_col) + 1, max(rook_col, king_col)):
-            if board[rook_row][c] != ".":
+        for column in range(min(rook_col, king_col) + 1, max(rook_col, king_col)):
+            if board[rook_row][column] != ".":
                 return False
         return True
     elif rook_col == king_col:
-        for r in range(min(rook_row, king_row) + 1, max(rook_row, king_row)):
-            if board[r][rook_col] != ".":
+        for row in range(min(rook_row, king_row) + 1, max(rook_row, king_row)):
+            if board[row][rook_col] != ".":
                 return False
         return True
     return False
@@ -90,32 +89,29 @@ def bishop_attack(board, bishop_row, bishop_col, king_row, king_col):
     if abs(bishop_row - king_row) == abs(bishop_col - king_col):
         row_step = 1 if king_row > bishop_row else -1
         col_step = 1 if king_col > bishop_col else -1
-        r, c = bishop_row + row_step, bishop_col + col_step
-        while r != king_row and c != king_col:
-            if board[r][c] != ".":
+        row, column = bishop_row + row_step, bishop_col + col_step
+        while row != king_row and column != king_col:
+            if board[row][column] != ".":
                 return False
-            r += row_step
-            c += col_step
+            row += row_step
+            column += col_step
         return True
     return False
-
 
 def queen_attack(board, queen_row, queen_col, king_row, king_col):
     return rook_attack(board, queen_row, queen_col, king_row, king_col) or bishop_attack(board, queen_row, queen_col, king_row, king_col)
 
 def pawn_attack(board, pawn_row, pawn_col, king_row, king_col):
-    if pawn_row + 1 == king_row and (pawn_col - 1 == king_col or pawn_col + 1 == king_col):
+    if pawn_row - 1 == king_row and (pawn_col - 1 == king_col or pawn_col + 1 == king_col):
         return True
     return False
-
-                
+            
 boardd = """
-R...
+....
 .K..
-..P.
+....
 ....
 """
-
 checkmate(boardd)
 
 
