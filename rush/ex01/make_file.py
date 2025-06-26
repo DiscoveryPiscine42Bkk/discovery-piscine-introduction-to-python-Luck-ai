@@ -1,5 +1,0 @@
-file = open("test.chess" , 'w')
-file.writelines("rrrrr\n")
-file.writelines("ddddd\n")
-file.writelines("fffff\n")
-file.close()

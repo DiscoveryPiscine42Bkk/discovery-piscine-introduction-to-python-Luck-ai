@@ -10,7 +10,9 @@ def main():
             for line in file:
                 board = board + line
     
-    checkmate(board)
+            checkmate(board)
+    else:
+        print("Fail")
 
 if __name__ == "__main__":
     main()
