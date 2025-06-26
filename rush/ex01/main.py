@@ -9,7 +9,7 @@ def main():
             file = open(sys.argv[1] , 'r')
             for line in file:
                 board = board + line
-    
+            file.close()
             checkmate(board)
     else:
         print("Fail")
